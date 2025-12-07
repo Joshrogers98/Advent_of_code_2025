@@ -3,22 +3,58 @@ Advent of Code 2025 - Day 2
 """
 
 import time
-
+import re
 
 def parse_input(input_text):
-    """Parse the input"""
-    lines = input_text.strip().split('\n')
+    lines = input_text.split(',')
     return lines
 
 
 def part1(data):
-    """Solve part 1"""
-    pass
+
+    invalid_numbers = []
+    for i in data:
+        my_range = list(range(int(i.split('-')[0]), int(i.split('-')[1])+1))
+        for j in my_range:
+            j = str(j).lstrip('0')
+            mid = len(j) // 2
+            if len(j) % 2 == 0:
+                left_half = j[:mid]
+                right_half = j[mid:]
+                is_invalid = (left_half == right_half)
+            else:
+                is_invalid = False 
+            
+            if(is_invalid):
+                invalid_numbers.append(j)
+    sum = 0
+    for i in invalid_numbers:
+        sum += int(i)
+
+    return sum
 
 
 def part2(data):
-    """Solve part 2"""
-    pass
+    invalid_numbers = []
+
+    for i in data:
+        my_range = list(range(int(i.split('-')[0]), int(i.split('-')[1])+1))
+        #print(my_range) 
+        invalid_in_range = []
+        for j in my_range:
+            j = str(j).lstrip('0')
+            is_invalid = bool(re.fullmatch(r"(.+)\1+", str(j)))
+            if is_invalid:
+                invalid_numbers.append(j)
+                invalid_in_range.append(j)
+
+        #print(f"Invalid numbers in range {i}: {invalid_in_range}")
+
+    sum = 0
+    for i in invalid_numbers:
+        sum += int(i)
+
+    return sum
 
 
 if __name__ == "__main__":

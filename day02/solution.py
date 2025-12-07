@@ -36,20 +36,13 @@ def part1(data):
 
 def part2(data):
     invalid_numbers = []
-
     for i in data:
         my_range = list(range(int(i.split('-')[0]), int(i.split('-')[1])+1))
-        #print(my_range) 
-        invalid_in_range = []
         for j in my_range:
             j = str(j).lstrip('0')
             is_invalid = bool(re.fullmatch(r"(.+)\1+", str(j)))
             if is_invalid:
                 invalid_numbers.append(j)
-                invalid_in_range.append(j)
-
-        #print(f"Invalid numbers in range {i}: {invalid_in_range}")
-
     sum = 0
     for i in invalid_numbers:
         sum += int(i)
